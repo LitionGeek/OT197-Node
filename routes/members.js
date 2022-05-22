@@ -4,8 +4,7 @@ const { createMember, getMember, deleteMember } = require('../controllers/member
 const {validateToken,generateToken}= require('../middlewares/auth');
 
 router.post("/",validateToken,createMember);
-router.get("/:id",getMember);
-router.delete("/:id",deleteMember);
+router.delete("/:id",validateToken,deleteMember);
 
 router.get("/",generateToken,(req,res)=>{
     res.json({ok:"ok"})
