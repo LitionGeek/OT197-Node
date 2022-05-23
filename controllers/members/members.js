@@ -1,4 +1,4 @@
-const { getMemberDAO, deleteMemberDAO, createMemberDAO } = require("./dao");
+const { getMemberDAO, deleteMemberDAO, createMemberDAO, getMembersDAO } = require("./dao");
 
 module.exports = {
     async createMember(req, res) {
@@ -20,7 +20,7 @@ module.exports = {
     },
     async deleteMember(req, res) {
         const memberID = await getMemberDAO(req.params.id);
-        console.log("memberID ",memberID)
+        console.log("memberID ", memberID)
         if (!memberID) {
             return res.status(404).json({
                 message: "Member not exist"
@@ -33,7 +33,7 @@ module.exports = {
             })
         } catch (error) {
             return res.status(500).json({
-                menssage:"Internal server error"
+                menssage: "Internal server error"
             })
         }
     },
@@ -43,5 +43,19 @@ module.exports = {
             message: "Member not found"
         });
 
+    },
+    async getMembers(req, res) {
+        try {
+            const members = await getMembersDAO();
+            if (members) {
+                return res.status(200).json({
+                    members
+                })
+            }
+        } catch (error) {
+            return res.status(500).json({
+                menssage: error
+            })
+        }
     }
 }
