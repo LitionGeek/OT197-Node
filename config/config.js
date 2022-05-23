@@ -22,6 +22,5 @@ module.exports = {
         "database": process.env.DB_NAME,
         "host": process.env.DB_HOST,
         "dialect": "mysql"
-    },
-    "secretJWT":"05kzqIc34LOVrmss6IdYu2hw3XPAwe6H7TSHg56YLJz9zQ0yERbW8EbZyP5w3x"
+    }
 }
