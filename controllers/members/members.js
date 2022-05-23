@@ -19,6 +19,13 @@ module.exports = {
         })
     },
     async deleteMember(req, res) {
+        const memberID = await getMemberDAO(req.params.id);
+        console.log("memberID ", memberID)
+        if (!memberID) {
+            return res.status(404).json({
+                message: "Member not exist"
+            });
+        }
         try {
             const memberID = await getMemberDAO(req.params.id);
             if (!memberID) {
