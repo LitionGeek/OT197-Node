@@ -13,10 +13,16 @@ module.exports = {
             name: req.body.name,
             image: req.body.image
         }
-        const memberCreated = await createMemberDAO(receivedMember);
-        return res.status(201).json({
-            user: memberCreated
-        })
+        try {
+            const memberCreated = await createMemberDAO(receivedMember);
+            return res.status(201).json({
+                user: memberCreated
+            })
+        } catch (error) {
+            return res.status(500).json({
+                menssage: error
+            })
+        }
     },
     async deleteMember(req, res) {
         const memberID = await getMemberDAO(req.params.id);
