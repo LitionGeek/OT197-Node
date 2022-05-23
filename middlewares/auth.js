@@ -12,7 +12,7 @@ module.exports.validateToken = (req,res,next)=>{
     }
     try {
         const verified = jwt.verify(token, process.env.secretJWT);
-        req.user = verified;
+        req.idUser = verified.id;
         next();
     } catch (error) {
         res.status(400).json({
@@ -22,8 +22,7 @@ module.exports.validateToken = (req,res,next)=>{
 }
 
 module.exports.generateToken = (req,res)=>{
-    const {name,id} = req.body;
-    const token = jwt.sign({name,id},process.env.secretJWT, { expiresIn: '1h' });
+    const token = jwt.sign({id:req.body.id},process.env.secretJWT, { expiresIn: '1h' });
     return res.status(200).json({
         token
     });
