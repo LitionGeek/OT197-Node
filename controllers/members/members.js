@@ -44,7 +44,7 @@ module.exports = {
         });
 
     },
-    async getMembers(req, res) {
+    async getAllMembers(req, res) {
         try {
             const members = await getMembersDAO();
             if (members) {
