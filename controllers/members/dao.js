@@ -15,5 +15,8 @@ module.exports = {
         return await db.Members.findOne({
             where:{id:id}
         })
+    },
+    async getMembersDAO(){
+        return await db.Members.findAll();
     }
 }

@@ -1,4 +1,4 @@
-const { getMemberDAO, deleteMemberDAO, createMemberDAO } = require("./dao");
+const { getMemberDAO, deleteMemberDAO, createMemberDAO, getMembersDAO } = require("./dao");
 
 module.exports = {
     async createMember(req, res) {
@@ -54,5 +54,19 @@ module.exports = {
             message: "Member not found"
         });
 
+    },
+    async getAllMembers(req, res) {
+        try {
+            const members = await getMembersDAO();
+            if (members) {
+                return res.status(200).json({
+                    members
+                })
+            }
+        } catch (error) {
+            return res.status(500).json({
+                menssage: error
+            })
+        }
     }
 }
