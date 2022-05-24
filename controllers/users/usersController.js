@@ -60,6 +60,21 @@ const usersController = {
             .catch((error) => {
                 res.status(500).json(error);
             })
+    },
+    usuarioList:(req,res)=>{
+        let validations=validationResult(req);
+        if(validations.isNotEmpty()){
+            db.Usuario.findAll({
+                attributes:['id','nombre','email','isAdmin'],
+            })
+            .then((usuarios)=>{
+                //debera mostrar los datos correspondientes del modelo Usuario
+                return res.status(200).json({message:usuarios})
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        }
     }
 }
 module.exports = usersController

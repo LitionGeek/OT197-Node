@@ -8,6 +8,7 @@ const usersController = require  ('../controllers/users/usersController')
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+router.get('/users', usersController.usuarioList);
 
 /* POST user create. */
 router.post('/auth/register',regValidations ,usersController.create)
