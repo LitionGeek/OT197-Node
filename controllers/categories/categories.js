@@ -1,6 +1,7 @@
 const Categories = require("../../models/Categories.js");
 const db = require("../../models");
 
+
 //Create
 const create = async(req, res) => {
     try {
@@ -56,6 +57,7 @@ const update = async(req, res) => {
 //Get All
 const getAll = async(req, res) => {
     let category = await db.Categories.findAll({ attributes: ['name'] });
+
     if (Object.keys(category).length === 0) {
         res.status(400).json({ error: 'Category database is empty.' });
     } else {

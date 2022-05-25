@@ -7,7 +7,7 @@ module.exports.validateToken = (req,res,next)=>{
     const token = req.headers["authorization"];
     if (!token){
        return res.status(401).json({
-           menssage:"Access denied"
+           message:"Access denied"
        });
     }
     try {
@@ -16,7 +16,7 @@ module.exports.validateToken = (req,res,next)=>{
         next();
     } catch (error) {
         res.status(400).json({
-            menssage:"Token invalid"
+            message:"Token invalid"
         })
     }
 }
