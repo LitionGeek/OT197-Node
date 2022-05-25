@@ -1,4 +1,3 @@
-const categories = require("../../models/Categories.js");
 const { Categories } = require("../../models/Categories.js");
 
 //Create
