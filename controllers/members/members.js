@@ -13,7 +13,7 @@ module.exports = {
             })
         } catch (error) {
             return res.status(500).json({
-                menssage: error
+                message: error
             })
         }
     },
@@ -27,11 +27,11 @@ module.exports = {
             }
             await deleteMemberDAO(memberID);
             return res.status(200).json({
-                menssage: "Member Deleted"
+                message: "Member Deleted"
             })
         } catch (error) {
             return res.status(500).json({
-                menssage: error
+                message: error
             })
         }
     },
@@ -50,9 +50,12 @@ module.exports = {
                     members
                 })
             }
+            return res.status(404).json({
+                message:'Users not found!'
+            });
         } catch (error) {
             return res.status(500).json({
-                menssage: error
+                message: error
             })
         }
     }
