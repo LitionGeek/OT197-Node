@@ -6,7 +6,7 @@ const { validateNameMember } = require('../middlewares/validationsMembers.js');
 
 
 router.get("/",getAllMembers);
-router.post("/",[validateNameMember,validateToken],createMember);
-router.delete("/:id",validateToken,deleteMember);
+router.post("/",[validateNameMember/*,validateToken*/],createMember);
+router.delete("/:id",/*validateToken,*/deleteMember);
 
 module.exports = router;

@@ -22,7 +22,8 @@ module.exports.validateToken = (req,res,next)=>{
 }
 
 module.exports.generateToken = (req,res)=>{
-    const token = jwt.sign({id:req.body.id},process.env.secretJWT, { expiresIn: '1h' });
+    const {user} = req;
+    const token = jwt.sign(user,process.env.secretJWT, { expiresIn: '1h' });
     return res.status(200).json({
         token
     });

@@ -17,22 +17,17 @@ module.exports = {
             })
         }
     },
-    async deleteMember(req, res) {
-        try {
-            const memberID = await getMemberDAO(req.params.id);
-            if (!memberID) {
-                return res.status(404).json({
-                    message: "Member not exist"
-                });
-            }
-            await deleteMemberDAO(memberID);
+    async deleteMember(req, res) { 
+         try {
+            const member = await getMemberDAO(req.params.id);
+            const deleted = await deleteMemberDAO(member.id);
             return res.status(200).json({
                 message: "Member Deleted"
             })
         } catch (error) {
-            return res.status(500).json({
-                message: error
-            })
+            return res.status(404).json({
+                message: "Member not exist"
+            });
         }
     },
     async getMember(req, res) {
