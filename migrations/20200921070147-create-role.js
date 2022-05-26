@@ -9,10 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
+      },
+      deletedAt: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -22,7 +26,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    },{ timestamps: true });
+    });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Roles');
