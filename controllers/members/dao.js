@@ -11,7 +11,7 @@ module.exports = {
     )},
     async getMemberDAO(id){
         return await db.Members.findOne({
-            where:{id:id}
+            where:{id}
         })
     },
     async getMembersDAO(){

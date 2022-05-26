@@ -17,13 +17,13 @@ module.exports = {
             })
         }
     },
-    async deleteMember(req, res) { 
-         try {
+    async deleteMember(req, res) {
+        try {
             const member = await getMemberDAO(req.params.id);
             const deleted = await deleteMemberDAO(member.id);
             return res.status(200).json({
                 message: "Member Deleted"
-            })
+            });
         } catch (error) {
             return res.status(404).json({
                 message: "Member not exist"
@@ -31,27 +31,32 @@ module.exports = {
         }
     },
     async getMember(req, res) {
-        const memberID = await getMemberDAO(req.params.id);
-        if (!memberID) return res.status(404).json({
-            message: "Member not found"
-        });
-
+        try {
+            const member = await getMemberDAO(req.params.id);
+            if (!memberID) {
+                return res.status(404).json({
+                    message: "Member not found"
+                });
+            }
+            return res.status(200).json({
+                member
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal server error'
+            });
+        }
     },
     async getAllMembers(req, res) {
         try {
             const members = await getMembersDAO();
-            if (members) {
-                return res.status(200).json({
-                    members
-                })
-            }
-            return res.status(404).json({
-                message:'Users not found!'
+            return res.status(200).json({
+                members
             });
         } catch (error) {
             return res.status(500).json({
-                message: error
-            })
+                message: 'Internal server error'
+            });
         }
     }
 }
