@@ -35,6 +35,7 @@ app.use('/users', usersRouter);
 app.use('/members', membersRouter);
 app.use('/categories', categoriesRouter);
 
+
 //Documentation endpoints
 swaggerDocs(app,3000);
 
