@@ -37,11 +37,11 @@ const usersController = {
                             .catch((error) => {
                                 return res.status(500).send(error)
                             });
-
                     }
                 })
         }
     },
+   
     delete: function (req, res) {
         let userId = req.params.id;
         User.destroy({
@@ -61,20 +61,33 @@ const usersController = {
                 res.status(500).json(error);
             })
     },
-    usuarioList:(req,res)=>{
-        let validations=validationResult(req);
-        if(validations.isNotEmpty()){
-            db.Usuario.findAll({
-                attributes:['id','nombre','email','isAdmin'],
+    usuarioList: (req, res) => {
+        let validations = validationResult(req);
+        if (validations.isEmpty()) {
+            User.findAll({
+                attributes: ['id', 'firstName', 'email', 'roleId'],
             })
-            .then((usuarios)=>{
-                //debera mostrar los datos correspondientes del modelo Usuario
-                return res.status(200).json({message:usuarios})
-            })
-            .catch((error)=>{
-                console.log(error);
-            })
+                .then((usuarios) => {
+                    return res.status(200).json({ message: usuarios })
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
+    },
+    login: async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        const user = await User.findOne({ where: { email: req.body.email } })
+        if (user) {
+            if (bcrypt.compareSync(req.body.password, user.password)) {
+                return res.send({ user })
+            }
+            res.status(401).send({ ok: false })
+        }
+        res.status(401).send({ ok: false })
     }
 }
 module.exports = usersController
