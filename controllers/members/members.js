@@ -1,3 +1,5 @@
+const membersPagination = require("../../utils/pagination");
+const { getOffset } = require("../../utils/pagination");
 const { getMemberDAO, deleteMemberDAO, createMemberDAO, getMembersDAO, updateMemberDAO } = require("./dao");
 
 module.exports = {
@@ -49,14 +51,22 @@ module.exports = {
         }
     },
     async getAllMembers(req, res) {
+        const page = parseInt(req.params.page);
+        const size = 10;
+        const condition = {
+            offset:getOffset(page,size),
+            limit:size
+        }
         try {
-            const members = await getMembersDAO();
+            const {count,rows} = await getMembersDAO(condition);
             return res.status(200).json({
-                members
+                pageNext:membersPagination.getNextPage(page,size,count),
+                pagePrevious:membersPagination.getPreviusPage(page),
+                members:rows
             });
         } catch (error) {
             return res.status(500).json({
-                message: 'Internal server error'
+                message: 'Internal server error',
             });
         }
     },

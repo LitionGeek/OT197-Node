@@ -14,8 +14,8 @@ module.exports = {
             where:{id}
         })
     },
-    async getMembersDAO(){
-        return await db.Members.findAll();
+    async getMembersDAO(condition){
+        return await db.Members.findAndCountAll(condition);
     },
     async updateMemberDAO(id,member){
         return await db.Members.update(member,{where:{id:id}});
