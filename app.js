@@ -4,17 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerDocs = require('./documentation/swagger');
 require('dotenv').config()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const membersRouter = require('./routes/members');
-<<<<<<< HEAD
-const swaggerDocs = require('./documentation/swagger');
-
-=======
 const categoriesRouter = require('./routes/categories');
->>>>>>> 0ab05f6ee15c193b4f50e2d6eed9efaa3821618d
+
 
 const app = express();
 app.use(cors())
