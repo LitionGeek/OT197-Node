@@ -15,7 +15,6 @@ module.exports = {
                 order: parseInt(order) || orderObt.dataValues.order,
                 organizationId:parseInt(organizationId)
             }
-            console.log("NEW ",newSlide, " order ", parseInt(order)," orderdb ",orderObt)
         } catch (error) {
             return res.status(400).json({
                 message:'Image could not be uploaded'
