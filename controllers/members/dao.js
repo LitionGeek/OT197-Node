@@ -5,18 +5,19 @@ module.exports = {
         await db.Members.create(member);
     },
     async deleteMemberDAO(memberID){
-        console.log("eee")
         return await db.Members.destroy({
             where:{id:memberID}
         }
-/*         await db.Members.destroy({where:{id:memberID}}) */
     )},
     async getMemberDAO(id){
         return await db.Members.findOne({
-            where:{id:id}
+            where:{id}
         })
     },
-    async getMembersDAO(){
-        return await db.Members.findAll();
+    async getMembersDAO(condition){
+        return await db.Members.findAndCountAll(condition);
+    },
+    async updateMemberDAO(id,member){
+        return await db.Members.update(member,{where:{id:id}});
     }
 }

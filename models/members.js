@@ -15,10 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   };
   Members.init({
     name: DataTypes.STRING,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    deletedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Members',
+    paranoid:true
   });
   return Members;
 };
