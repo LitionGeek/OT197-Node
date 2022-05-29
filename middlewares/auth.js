@@ -21,10 +21,7 @@ module.exports.validateToken = (req,res,next)=>{
     }
 }
 
-module.exports.generateToken = (req,res)=>{
-    const {user} = req;
+module.exports.generateToken = (user)=>{
     const token = jwt.sign(user,process.env.secretJWT, { expiresIn: '1h' });
-    return res.status(200).json({
-        token
-    });
+    return token;
 }
