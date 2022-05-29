@@ -1,6 +1,7 @@
 const { User } = require("../../models/index.js")
 const { validationResult } = require('express-validator');
 const bcrypt = require("bcrypt")
+const { generateToken } = require("../../middlewares/auth.js");
 
 const usersController = {
     create: (req, res) => {
@@ -16,8 +17,9 @@ const usersController = {
                     let userToRegister = users.find(i => i.email == req.body.email)
                     if (userToRegister) {
                         return res.status(400).send("User already exist")
+                      
                     } else {
-                        User.create({
+                            User.create({
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email,
@@ -26,13 +28,14 @@ const usersController = {
                             roleId: req.body.roleId,
                         })
                             .then((result) => {
-                                res.status(200).json(
+                                res.header('auth-token',generateToken(result)).status(200).json(
                                     {
                                         id: result.id,
                                         firstName: result.firstName,
                                         lastName: result.lastName,
                                         email: result.email,
                                     });
+
                             })
                             .catch((error) => {
                                 return res.status(500).send(error)
@@ -41,7 +44,23 @@ const usersController = {
                 })
         }
     },
-   
+    update: async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        } else {
+            if (req.body.password) {
+                req.body.password = bcrypt.hashSync(req.body.password, 10)
+            }
+            let user = await User.update(req.body, { where: { id: req.params.id } });
+            if (user == 0) {
+                res.status(400).json({ error: 'User not found or update information empty.' });
+            } else {
+                res.status(200).json({ success: `The user ${req.params.id} was updated succesfully.` })
+            }
+
+        }
+    },
     delete: function (req, res) {
         let userId = req.params.id;
         User.destroy({
@@ -74,20 +93,6 @@ const usersController = {
                     console.log(error);
                 })
         }
-    },
-    login: async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        const user = await User.findOne({ where: { email: req.body.email } })
-        if (user) {
-            if (bcrypt.compareSync(req.body.password, user.password)) {
-                return res.send({ user })
-            }
-            res.status(401).send({ ok: false })
-        }
-        res.status(401).send({ ok: false })
     }
 }
 module.exports = usersController
