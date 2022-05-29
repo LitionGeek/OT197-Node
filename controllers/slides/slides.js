@@ -1,5 +1,5 @@
 const uploadFile = require('../../helpers/S3');
-const { createSlidesDAO, getSlidesDAO, getFinalList } = require('./dao');
+const { createSlidesDAO, getSlidesDAO, getFinalList, getOneSlide } = require('./dao');
 
 module.exports = {
     async uploadImage(req, res) {
@@ -35,5 +35,19 @@ module.exports = {
         res.status(200).json({
             slides:listSlide
         });
+    },
+    async getOneSlide(req,res){
+        try {
+            console.log(req.params.id)
+            const slide = await getOneSlide(req.params.id);
+            res.status(200).json({
+                slide
+            })
+        } catch (error) {
+            return res.status(404).json({
+                message:'Slider id no exist!'
+            })
+        }
+        
     }
 }

@@ -11,5 +11,8 @@ module.exports = {
     },
     async getFinalList(){
         return await db.Slides.findOne({order:[['createdAt','DESC']],attributes:["order"],where:{order:{[Op.not]: 0}}});
+    },
+    async getOneSlide(id){
+        return await db.Slides.findOne({where:{id:id}})
     }
 }
