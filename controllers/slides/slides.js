@@ -1,25 +1,27 @@
 const uploadFile = require('../../helpers/S3');
-const { createSlides } = require('./dao');
+const { createSlidesDAO, getSlidesDAO, getFinalList } = require('./dao');
 
 module.exports = {
     async uploadImage(req, res) {
         const {image,text,order,organizationId} = req.body;
         const extension = image.substring("data:image/".length, image.indexOf(";base64"));
-        let slide;
+        let newSlide;
         try {
-            const {Location : imageUrl } = await uploadFile(image, extension)
-            slide = {
+            const {Location : imageUrl } = await uploadFile(image, extension);
+            const orderObt = await getFinalList();
+            newSlide = {
                 imageUrl,
                 text,
-                order:parseInt(order),
+                order: parseInt(order) || orderObt.dataValues.order,
                 organizationId:parseInt(organizationId)
             }
+            console.log("NEW ",newSlide, " order ", parseInt(order)," orderdb ",orderObt)
         } catch (error) {
             return res.status(400).json({
                 message:'Image could not be uploaded'
             });
         }
-        await createSlides(slide).then(data=>{
+        await createSlidesDAO(newSlide).then(data=>{
             return res.status(201).json({
                 message:'Slide created'
             });
@@ -28,5 +30,11 @@ module.exports = {
                 message:'Could not create slide'
             });
         })
+    },
+    async getSlides(req,res){
+        const listSlide = await getSlidesDAO();
+        res.status(200).json({
+            slides:listSlide
+        });
     }
 }
