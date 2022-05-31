@@ -1,6 +1,7 @@
 const { User } = require("../../models/index.js")
 const { validationResult } = require('express-validator');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+
 const { generateToken } = require("../../middlewares/auth.js");
 
 const usersController = {
@@ -19,7 +20,7 @@ const usersController = {
                         return res.status(400).send("User already exist")
                       
                     } else {
-                            User.create({
+                        User.create({
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email,
@@ -35,7 +36,6 @@ const usersController = {
                                         lastName: result.lastName,
                                         email: result.email,
                                     });
-
                             })
                             .catch((error) => {
                                 return res.status(500).send(error)
