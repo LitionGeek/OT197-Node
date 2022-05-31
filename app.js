@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const membersRouter = require('./routes/members');
 const categoriesRouter = require('./routes/categories');
+const slidesRouter = require('./routes/slides');
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/members', membersRouter);
 app.use('/categories', categoriesRouter);
+app.use('/slides',slidesRouter);
 
 
 //Documentation endpoints
