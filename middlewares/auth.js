@@ -34,5 +34,3 @@ module.exports.generateToken = (user) => {
         { expiresIn: '1h' });
     return token;
 };
-
-
