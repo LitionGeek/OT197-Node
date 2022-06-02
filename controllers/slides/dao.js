@@ -10,12 +10,15 @@ module.exports = {
         return await db.Slides.findAll({attributes:['order','imageUrl']});
     },
     async getFinalListDAO(){
-        return await db.Slides.findOne({order:[['createdAt','DESC']],attributes:["order"],where:{order:{[Op.not]: 0}}});
+        return await db.Slides.findOne({order:[['createdAt','DESC']],attributes:["order"],where:{order:{[Op.not]: 0||null}}});
     },
     async getOneSlideDAO(id){
         return await db.Slides.findOne({where:{id:id}})
     },
     async editSlideDAO(slideUpdate,id){
         return await db.Slides.update(slideUpdate,{where:{id:id}});
+    },
+    async deleteSlideDAO(id){
+        return await db.Slides.destroy({where:{id:id}})
     }
 }

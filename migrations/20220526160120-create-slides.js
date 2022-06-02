@@ -18,7 +18,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       organizationId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+/*         references: {
+          model: 'Organization',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL' */
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +32,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         type: Sequelize.DATE
       }
     });
