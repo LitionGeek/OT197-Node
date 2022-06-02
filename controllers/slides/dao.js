@@ -9,10 +9,13 @@ module.exports = {
     async getSlidesDAO(){
         return await db.Slides.findAll({attributes:['order','imageUrl']});
     },
-    async getFinalList(){
+    async getFinalListDAO(){
         return await db.Slides.findOne({order:[['createdAt','DESC']],attributes:["order"],where:{order:{[Op.not]: 0}}});
     },
-    async getOneSlide(id){
+    async getOneSlideDAO(id){
         return await db.Slides.findOne({where:{id:id}})
+    },
+    async editSlideDAO(slideUpdate,id){
+        return await db.Slides.update(slideUpdate,{where:{id:id}});
     }
 }

@@ -1,5 +1,5 @@
 const uploadFile = require('../../helpers/S3');
-const { createSlidesDAO, getSlidesDAO, getFinalList, getOneSlide } = require('./dao');
+const { createSlidesDAO, getSlidesDAO, getFinalListDAO, getOneSlideDAO, editSlideDAO } = require('./dao');
 
 module.exports = {
     async uploadImage(req, res) {
@@ -8,7 +8,7 @@ module.exports = {
         let newSlide;
         try {
             const {Location : imageUrl } = await uploadFile(image, extension);
-            const orderObt = await getFinalList();
+            const orderObt = await getFinalListDAO();
             newSlide = {
                 imageUrl,
                 text,
@@ -38,16 +38,56 @@ module.exports = {
     },
     async getOneSlide(req,res){
         try {
-            console.log(req.params.id)
-            const slide = await getOneSlide(req.params.id);
-            res.status(200).json({
-                slide
-            })
-        } catch (error) {
+            const slide = await getOneSlideDAO(req.params.id);
+            if(slide){
+                return res.status(200).json({
+                    slide
+                })
+            }
             return res.status(404).json({
-                message:'Slider id no exist!'
+                message:"Slide not found"
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                message:'Internal server error!'
             })
         }
         
+    },
+    async editSlide(req,res){
+        const {image,text,order,organizationId} = req.body;
+        let slideUpdate;
+        try {
+            await getOneSlideDAO(req.params.id).then(async slide => {
+                if(!slide){
+                    return res.status(404).json({
+                        message:"Slide no exist!"
+                    })
+                } 
+                const orderObt = await getFinalListDAO();
+                slideUpdate = {
+                    imageUrl:image,
+                    text,
+                    order: parseInt(order) || orderObt.dataValues.order,
+                    organizationId:parseInt(organizationId)
+                }
+                await editSlideDAO(slideUpdate,req.params.id)
+                .then(result=>{
+                    return res.status(200).json({
+                        message:"Upload slide!"
+                    })
+                })
+                .catch(err=>{
+                    return res.status(400).json({
+                        message:"Could not upload slide"
+                    })
+                });
+            })    
+        } catch (error) {
+            return res.status(500).json(error=>{
+                error
+            })
+        }
     }
 }
