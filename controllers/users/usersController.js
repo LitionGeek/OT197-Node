@@ -3,9 +3,12 @@ const { validationResult } = require('express-validator');
 const bcrypt = require("bcrypt");
 
 const { generateToken } = require("../../middlewares/auth.js");
+const sendEmail = require("../../templates/welcomeEmail");
+
 
 const usersController = {
-    create: (req, res) => {
+        create: (req, res) => {
+        
         const errors = validationResult(req);
         // Validate errors
         if (!errors.isEmpty()) {
@@ -29,6 +32,7 @@ const usersController = {
                             roleId: req.body.roleId,
                         })
                             .then((result) => {
+                                sendEmail(result.email)
                                 res.header('auth-token',generateToken(result)).status(200).json(
                                     {
                                         id: result.id,
