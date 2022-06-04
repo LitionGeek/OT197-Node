@@ -12,7 +12,7 @@ module.exports = {
             newSlide = {
                 imageUrl,
                 text,
-                order: parseInt(order) || 1,
+                order: parseInt(order) ,
                 organizationId: parseInt(organizationId)
             }
         } catch (error) {
