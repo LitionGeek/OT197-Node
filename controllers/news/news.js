@@ -79,4 +79,37 @@ module.exports = {
             })
             .catch(e => console.log(e))
     },
+    edit: (req, res) => {
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.json({
+                ok: false,
+                errors: errors.mapped()
+            })
+        }
+        db.News.update({
+            ...req.body
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+            .then(result => {
+                if (result != 0) {
+                    return res.json({
+                        msg: `News ${req.params.id} edited succesfully`,
+                        ok: true,
+                        url: `news/${req.params.id}`
+                    });
+                } else {
+                    return res.json({
+                        msg: `News ${req.params.id} not found`,
+                        ok: false,
+                        url: `news/${req.params.id}`
+                    });
+                }
+
+            })
+            .catch(e => console.log(e))
+    },
 }
