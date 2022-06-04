@@ -8,10 +8,13 @@ const newsValidations = require('../middlewares/newsValidations')
 });
  */
 /* GET news by id */
-router.get('/:id',newsController.detail);
+router.get('/:id',/*idAmin?  */newsController.detail);
 
 /* POST news create. */
 router.post('/',/*idAmin?  */ newsValidations, newsController.create);
+
+/* DELETE news by id */
+router.delete('/:id',/*idAmin?  */ newsController.delete);
 
 
 module.exports = router;

@@ -55,4 +55,28 @@ module.exports = {
             })
             .catch(e => console.log(e))
     },
+    delete: (req, res) => {
+        db.News.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+            .then((result) => {
+                if (result) {
+                    return res.json({
+                        msg: `News ${req.params.id} removed succesfully.`,
+                        ok: true,
+                        url: `news/${req.params.id}`
+                    });
+                } else {
+                    return res.json({
+                        msg: `News ${req.params.id} not found`,
+                        ok: false,
+                        url: `news/${req.params.id}`
+                    });
+                }
+
+            })
+            .catch(e => console.log(e))
+    },
 }
