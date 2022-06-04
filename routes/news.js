@@ -7,6 +7,8 @@ const newsValidations = require('../middlewares/newsValidations')
     res.send('Test');
 });
  */
+/* GET news by id */
+router.get('/:id',newsController.detail);
 
 /* POST news create. */
 router.post('/',/*idAmin?  */ newsValidations, newsController.create);

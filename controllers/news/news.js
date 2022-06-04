@@ -31,4 +31,28 @@ module.exports = {
             })
             .catch(e => console.log(e))
     },
+    detail: (req, res) => {
+        db.News.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [{ association: "category" }]
+        })
+            .then(news => {
+                if (news != null) {
+                    return res.json({
+                        ok: true,
+                        data: news,
+                        url: ('/news/' + req.params.id),
+                    });
+                } else {
+                    return res.json({
+                        ok: false,
+                        msg: 'New not found',
+                        url: ('/news/' + req.params.id),
+                    });
+                }
+            })
+            .catch(e => console.log(e))
+    },
 }
