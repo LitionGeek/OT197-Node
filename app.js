@@ -14,6 +14,7 @@ const categoriesRouter = require('./routes/categories');
 const contactsRouter = require('./routes/contacts');
 const backofficeRouter = require('./routes/backoffice');
 const slidesRouter = require('./routes/slides');
+const newsRouter = require('./routes/news');
 
 
 
@@ -38,6 +39,7 @@ app.use('/categories', categoriesRouter);
 app.use('/contacts', contactsRouter);
 app.use('/backoffice', backofficeRouter);
 app.use('/slides',slidesRouter);
+app.use('/news', newsRouter);
 
 
 //Documentation endpoints
