@@ -8,13 +8,13 @@ router.get('/', function (req, res) {
 });
 
 /* GET testimonials by id */
-//router.get('/:id',/*idAmin?  */testimonialsController.detail);
+router.get('/:id',/*idAmin?  */testimonialsController.detail);
 
 /* POST testimonials create. */
 router.post('/',/*idAmin?  */ createTestimonial, testimonialsController.create);
 
 /* DELETE testimonials by id */
-//router.delete('/:id',/*idAmin?  */ testimonialsController.delete);
+router.delete('/:id',/*idAmin?  */ testimonialsController.delete);
 
 /* UPDATE testimonials by id */
 router.put('/:id',/*idAmin?  */ updateTestimonial, testimonialsController.edit);
