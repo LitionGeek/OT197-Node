@@ -11,7 +11,10 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const membersRouter = require('./routes/members');
 const categoriesRouter = require('./routes/categories');
+const contactsRouter = require('./routes/contacts');
+const backofficeRouter = require('./routes/backoffice');
 const slidesRouter = require('./routes/slides');
+
 
 
 const app = express();
@@ -32,11 +35,13 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/members', membersRouter);
 app.use('/categories', categoriesRouter);
+app.use('/contacts', contactsRouter);
+app.use('/backoffice', backofficeRouter);
 app.use('/slides',slidesRouter);
 
 
 //Documentation endpoints
-swaggerDocs(app,3000);
+swaggerDocs(app, 3000);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
