@@ -21,12 +21,12 @@ module.exports = {
             image: image,
             categoryId: categoryId
         })
-            .then((user) => {
+            .then((news) => {
                 return res.json({
                     msg: "News created successfully",
                     ok: true,
                     url: '/news',
-                    data: user
+                    data: news
                 });
             })
             .catch(e => console.log(e))
