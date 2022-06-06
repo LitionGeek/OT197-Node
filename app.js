@@ -15,6 +15,7 @@ const contactsRouter = require('./routes/contacts');
 const backofficeRouter = require('./routes/backoffice');
 const slidesRouter = require('./routes/slides');
 const newsRouter = require('./routes/news');
+const testimonialsRouter = require('./routes/testimonials');
 
 
 
@@ -40,7 +41,7 @@ app.use('/contacts', contactsRouter);
 app.use('/backoffice', backofficeRouter);
 app.use('/slides',slidesRouter);
 app.use('/news', newsRouter);
-
+app.use('/testimonials', testimonialsRouter);
 
 //Documentation endpoints
 swaggerDocs(app, 3000);
