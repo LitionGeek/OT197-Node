@@ -16,7 +16,7 @@ const backofficeRouter = require('./routes/backoffice');
 const slidesRouter = require('./routes/slides');
 const newsRouter = require('./routes/news');
 const testimonialsRouter = require('./routes/testimonials');
-
+const activitiesRouter = require('./routes/activities');
 
 
 const app = express();
@@ -42,6 +42,7 @@ app.use('/backoffice', backofficeRouter);
 app.use('/slides',slidesRouter);
 app.use('/news', newsRouter);
 app.use('/testimonials', testimonialsRouter);
+app.use('/activities', activitiesRouter);
 
 //Documentation endpoints
 swaggerDocs(app, 3000);
