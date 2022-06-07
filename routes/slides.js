@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { getSlides, uploadImage, getOneSlide } = require('../controllers/slides/slides');
+const { getSlides, uploadImage, getOneSlide, editSlide, deleteSlide } = require('../controllers/slides/slides');
 const { validationBody } = require('../middlewares/validationSlide');
 
 const storage = multer.memoryStorage({
@@ -15,5 +15,7 @@ const upload = multer({storage}).single('image');
 router.post('/',[upload,validationBody],uploadImage);
 router.get('/',getSlides);
 router.get('/:id',getOneSlide);
+router.put('/:id',[upload,validationBody],editSlide);
+router.delete('/:id',deleteSlide);
 
 module.exports = router;
