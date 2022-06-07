@@ -3,9 +3,12 @@ const { validationResult } = require('express-validator');
 const bcrypt = require("bcrypt");
 
 const { generateToken } = require("../../middlewares/auth.js");
+const sendEmail = require("../../templates/welcomeEmail");
+
 
 const usersController = {
-    create: (req, res) => {
+        create: (req, res) => {
+        
         const errors = validationResult(req);
         // Validate errors
         if (!errors.isEmpty()) {
@@ -25,10 +28,11 @@ const usersController = {
                             lastName: req.body.lastName,
                             email: req.body.email,
                             password: bcrypt.hashSync(req.body.password, 10),
-                            image: req.body.image,
+                            photo: req.body.photo,
                             roleId: req.body.roleId,
                         })
                             .then((result) => {
+                                sendEmail(result.email)
                                 res.header('auth-token',generateToken(result)).status(200).json(
                                     {
                                         id: result.id,
