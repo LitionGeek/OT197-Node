@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
     up: async(queryInterface, Sequelize) => {
         await queryInterface.createTable("Comments", {
@@ -9,16 +7,16 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            user_id: {
+            userId: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'User',
+                    model: 'Users',
                     key: 'id'
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL'
             },
-            news_id: {
+            newsId: {
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'News',

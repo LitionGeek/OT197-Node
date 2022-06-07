@@ -9,34 +9,28 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             Comments.belongsTo(models.User, {
-                as: 'user',
-                foreignKey: 'user_id',
-                onDelete: 'cascade',
-                onUpdate: 'cascade'
+                as: 'users',
             })
-            Comments.belongsTo(models.News, {
-                as: 'news',
-                foreignKey: 'news_id'
-            })
+            Comments.belongsTo(models.News, { as: 'news', })
         }
     }
     Comments.init({
-        user_id: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        news_id: {
+        newsId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
         body: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        deletedAt: DataTypes.DATE
     }, {
         sequelize,
         modelName: 'Comments',
-        deletedAt: 'deletedAt',
         paranoid: true,
         timestamps: true
     })
