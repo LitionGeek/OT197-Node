@@ -1,8 +1,8 @@
-const { getAllDAO } = require("./dao")
+const { getAllDAOWithSlides } = require("./dao")
 
 module.exports = {
     async getAllOrganizations(req,res){
-        await getAllDAO()
+        await getAllDAOWithSlides()
         .then(result=>{
             return res.status(200).json({
                 organizations:result
