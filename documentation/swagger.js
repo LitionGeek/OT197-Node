@@ -18,7 +18,7 @@ module.exports.options = {
                 "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
             }
         },
-        "basePath": "/v1",
+        "basePath": "/",
         "tags": [
             {
                 "name": "member",
@@ -28,13 +28,16 @@ module.exports.options = {
                     "url": "http://swagger.io"
                 }
             },
+            {
+                "name": "Auth",
+                "description": "Auht user endpoints",
+            },
         ],
         "schemes": [
-            "https",
             "http"
         ],
         "paths": {
-            "/member": {
+            "/members": {
                 "post": {
                     "tags": [
                         "member"
@@ -71,7 +74,7 @@ module.exports.options = {
                                 }
                             }
                         },
-                         "500": {
+                        "500": {
                             "description": "Internal server error"
                         }
                     },
@@ -85,7 +88,7 @@ module.exports.options = {
                     ]
                 },
             },
-            "/member/{memberID}": {
+            "/members/{memberID}": {
                 "delete": {
                     "tags": [
                         "member"
@@ -215,6 +218,146 @@ module.exports.options = {
                     ]
                 }
             },
+            "/users/auth/register": {
+                "post": {
+                    "tags": [
+                        "Auth"
+                    ],
+                    "summary": "Add a new user to the ONG",
+                    "description": "",
+                    "consumes": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "description": "User object that needs to be added to the ong",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "User created",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
+                },
+            },
+            "/users/auth/login": {
+                "post": {
+                    "tags": [
+                        "Auth"
+                    ],
+                    "summary": "Login user to the ONG",
+                    "description": "",
+                    "consumes": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "description": "The user email and password",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/Auth"
+                            }
+                        }
+                    ],
+                    "example": {
+                        "email": "juanperez@gmail.com",
+                        "password": "Ju#nPerez2",
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Login successful",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
+                }
+            }, "/users/users": {
+                "get": {
+                    "tags": [
+                        "User"
+                    ],
+                    "summary": "List user to the ONG",
+                    "description": "",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                   
+                    "responses": {
+                        "200": {
+                            "description": "List",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
+
+                },
+            },
         },
         "securityDefinitions": {
             "api_key": {
@@ -226,7 +369,7 @@ module.exports.options = {
         "definitions": {
             "Member": {
                 "type": "object",
-                "required":[
+                "required": [
                     "name"
                 ],
                 "properties": {
@@ -238,19 +381,78 @@ module.exports.options = {
                     }
                 }
             },
+            "Auth":{
+                "type": "object",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "email": "juanperez@gmail.com",
+                    "password": "Ju#nPerez2"
+                }
+            },
+            "User": {
+                "type": "object",
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "password",
+                    "roleId",
+                    "image"
+                ],
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                    },
+                    "lastName": {
+                        "type": "string",
+                    },
+                    "email": {
+                        "type": "string",
+                    },
+                    "password": {
+                        "type": "string",
+                    },
+                    "roleId": {
+                        "type": "integer",
+                    },
+                    "image": {
+                        "type": "string",
+                    },
+                },
+                "example": {
+                    "firstName": "Juan",
+                    "lastName": "Perez",
+                    "email": "juanperez@gmail.com",
+                    "password": "Ju#nPerez2",
+                    "roleId": 1,
+                    "image": "juanavatar.jpg"
+                }
+            }
         },
     },
-    basePath:"/",
-    apis:[path.join(__dirname,"./routes/members.js")],
+    basePath: "/",
+    apis: [`${path.join(__dirname, "/documentations/*.js")}`],
     "externalDocs": {
         "description": "Find out more about Swagger",
         "url": "http://swagger.io"
     }
+
 }
 
 const swaggerSpect = swaggerJSDoc(this.options);
 
-    function swaggerDocs(app, port) {
+function swaggerDocs(app, port) {
     app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpect));
     app.get("docs.json", (req, res) => {
         res.setHeader("Content-Type", "application/json");
@@ -259,3 +461,4 @@ const swaggerSpect = swaggerJSDoc(this.options);
 }
 
 module.exports = swaggerDocs;
+

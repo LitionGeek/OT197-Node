@@ -13,50 +13,44 @@ module.exports = {
             })
         }
 
-        const { name, content, image, categoryId } = req.body
-
-        db.News.create({
-            name: name,
-            content: content,
-            image: image,
-            categoryId: categoryId
+        db.Testimonial.create({
+            ...req.body
         })
-            .then((news) => {
+            .then((testimonial) => {
                 return res.json({
-                    msg: "News created successfully",
+                    msg: "Testimonial created successfully",
                     ok: true,
-                    url: '/news',
-                    data: news
+                    url: '/testimonials',
+                    data: testimonial
                 });
             })
             .catch(e => console.log(e))
     },
     detail: (req, res) => {
-        db.News.findOne({
+        db.Testimonial.findOne({
             where: {
                 id: req.params.id
-            },
-            include: [{ association: "category" }]
+            }
         })
-            .then(news => {
-                if (news != null) {
+            .then(testimonial => {
+                if (testimonial != null) {
                     return res.json({
                         ok: true,
-                        data: news,
-                        url: ('/news/' + req.params.id),
+                        data: testimonial,
+                        url: ('/testimonial/' + req.params.id),
                     });
                 } else {
                     return res.json({
                         ok: false,
-                        msg: 'New not found',
-                        url: ('/news/' + req.params.id),
+                        msg: 'Testimonial not found',
+                        url: ('/testimonial/' + req.params.id),
                     });
                 }
             })
             .catch(e => console.log(e))
     },
     delete: (req, res) => {
-        db.News.destroy({
+        db.Testimonial.destroy({
             where: {
                 id: req.params.id
             }
@@ -64,18 +58,17 @@ module.exports = {
             .then((result) => {
                 if (result) {
                     return res.json({
-                        msg: `News ${req.params.id} removed succesfully.`,
+                        msg: `Testimonial ${req.params.id} removed succesfully.`,
                         ok: true,
-                        url: `news/${req.params.id}`
+                        url: `testimonials/${req.params.id}`
                     });
                 } else {
                     return res.json({
-                        msg: `News ${req.params.id} not found`,
+                        msg: `Testimonial ${req.params.id} not found`,
                         ok: false,
-                        url: `news/${req.params.id}`
+                        url: `testimonials/${req.params.id}`
                     });
                 }
-
             })
             .catch(e => console.log(e))
     },
@@ -87,7 +80,7 @@ module.exports = {
                 errors: errors.mapped()
             })
         }
-        db.News.update({
+        db.Testimonial.update({
             ...req.body
         }, {
             where: {
@@ -97,15 +90,15 @@ module.exports = {
             .then(result => {
                 if (result != 0) {
                     return res.json({
-                        msg: `News ${req.params.id} edited succesfully`,
+                        msg: `Testimonial ${req.params.id} edited succesfully`,
                         ok: true,
-                        url: `news/${req.params.id}`
+                        url: `testimonial/${req.params.id}`
                     });
                 } else {
                     return res.json({
-                        msg: `News ${req.params.id} not found`,
+                        msg: `Testimonial ${req.params.id} not found`,
                         ok: false,
-                        url: `news/${req.params.id}`
+                        url: `testimonial/${req.params.id}`
                     });
                 }
 
