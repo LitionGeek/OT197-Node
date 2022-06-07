@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Slides',
+    paranoid: true,
+    timestamps:true,
+    deletedAt: 'deleteAt'
   });
   return Slides;
 };
