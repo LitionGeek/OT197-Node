@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) { // Comment associated because model organization is not created
-      Slides.belongsToMany(models.Organization, {as: 'Organization'},{forgeinKey:'id'});
+      Slides.belongsToMany(models.Organization, {through: "Organization",foreignKey:'id'});
     }
   };
   Slides.init({

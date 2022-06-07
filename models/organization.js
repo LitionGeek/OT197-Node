@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Organization.belongsTo(models.Slides, { as: 'Slides' },{forgeignKey:'slides'});
+      Organization.belongsTo(models.Slides,{through: "SlideId",foreignKey:'id'});
     }
   };
   Organization.init({
