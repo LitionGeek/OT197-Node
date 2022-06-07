@@ -28,7 +28,7 @@ const usersController = {
                             lastName: req.body.lastName,
                             email: req.body.email,
                             password: bcrypt.hashSync(req.body.password, 10),
-                            image: req.body.image,
+                            photo: req.body.photo,
                             roleId: req.body.roleId,
                         })
                             .then((result) => {
