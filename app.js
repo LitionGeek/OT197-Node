@@ -17,6 +17,7 @@ const slidesRouter = require('./routes/slides');
 const newsRouter = require('./routes/news');
 const testimonialsRouter = require('./routes/testimonials');
 const activitiesRouter = require('./routes/activities');
+const organizationRouter = require('./routes/organization');
 
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/slides',slidesRouter);
 app.use('/news', newsRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/activities', activitiesRouter);
+app.use('/organization', organizationRouter);
 
 //Documentation endpoints
 swaggerDocs(app, 3000);
