@@ -15,9 +15,9 @@ const contactsRouter = require('./routes/contacts');
 const backofficeRouter = require('./routes/backoffice');
 const slidesRouter = require('./routes/slides');
 const newsRouter = require('./routes/news');
+const commentsRouter = require('./routes/comments');
+const postRouter = require('./routes/post');
 const testimonialsRouter = require('./routes/testimonials');
-
-
 
 const app = express();
 app.use(cors())
@@ -39,8 +39,10 @@ app.use('/members', membersRouter);
 app.use('/categories', categoriesRouter);
 app.use('/contacts', contactsRouter);
 app.use('/backoffice', backofficeRouter);
-app.use('/slides',slidesRouter);
+app.use('/slides', slidesRouter);
 app.use('/news', newsRouter);
+app.use('/comments', commentsRouter);
+app.use('/post', postRouter);
 app.use('/testimonials', testimonialsRouter);
 
 //Documentation endpoints
