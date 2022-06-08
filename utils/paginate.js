@@ -1,4 +1,4 @@
- const paginate = async (url,model, pageSize, pageLimit, search = {}, order = []) => {
+ const paginate = async (model, pageSize, pageLimit, search = {}, order = []) => {
     try {
         const limit = parseInt(pageLimit, 10) || 10;
         const page = parseInt(pageSize, 10) || 1;
@@ -26,7 +26,7 @@
         return {
             previousPage: getPreviousPage(page),
             currentPage: page,
-            nextPage: url + "?page="+ getNextPage(page, limit, count),
+            nextPage: getNextPage(page, limit, count),
             total: count,
             limit: limit,
             data: rows
