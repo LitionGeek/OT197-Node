@@ -8,7 +8,7 @@ const { validateToken} = require('../middlewares/auth');
 
 
 
-/* POST user create. */
+/* POST activities create. */
 router.post('/',validateToken,isAdmin,activitiesValidations,activitiesController.create)
 
 
