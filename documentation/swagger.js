@@ -32,6 +32,10 @@ module.exports.options = {
                 "name": "Auth",
                 "description": "Auht user endpoints",
             },
+            {
+                "name": "Categories",
+                "description": "Categories endpoints",
+            },
         ],
         "schemes": [
             "http"
@@ -332,7 +336,7 @@ module.exports.options = {
                         "application/json",
                         "application/xml"
                     ],
-                   
+
                     "responses": {
                         "200": {
                             "description": "List",
@@ -357,99 +361,296 @@ module.exports.options = {
                     ]
 
                 },
-            },
-        },
-        "securityDefinitions": {
-            "api_key": {
-                "type": "apiKey",
-                "name": "api_key",
-                "in": "header"
-            }
-        },
-        "definitions": {
-            "Member": {
-                "type": "object",
-                "required": [
-                    "name"
-                ],
-                "properties": {
-                    "image": {
-                        "type": "string",
+            }, "/categories": {
+                "get": {
+                    "tags": [
+                        "Categories"
+                    ],
+                    "summary": "List categories 10 per page ",
+                    "description": "",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+
+                    "responses": {
+                        "200": {
+                            "description": "List",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/Categories"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
                     },
-                    "name": {
-                        "type": "string"
-                    }
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
+
+                },
+            }, "/categories/{id}": {
+                "get": {
+                    "tags": [
+                        "Categories"
+                    ],
+                    "summary": "Find Category by ID",
+                    "description": "",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "Category id field is required",
+                            "required": true,
+                            "type": "integer",
+                        },
+                    ],
+
+                    "responses": {
+                        "200": {
+                            "description": "List",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/Categories"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
+                },
+                "put": {
+                    "tags": [
+                        "Categories"
+                    ],
+                    "summary": "Update Category by ID",
+                    "description": "",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "Category id field is required",
+                            "required": true,
+                            "type": "integer",
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "description": "Category object that needs to be added to the ong",
+                            "required": true,
+                            "schema": {
+                                "$ref": "#/definitions/Categories"
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "List",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/Categories"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
+                },
+                "delete": {
+                    "tags": [
+                        "Categories"
+                    ],
+                    "summary": "Delete Category by ID",
+                    "description": "",
+                    "produces": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "description": "Category id field is required",
+                            "required": true,
+                            "type": "integer",
+                        },
+                    ],
+
+                    "responses": {
+                        "200": {
+                            "description": "List",
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/Categories"
+                                }
+                            }
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "api_key": [
+                                "write:member",
+                                "read:member"
+                            ]
+                        }
+                    ]
                 }
             },
-            "Auth":{
-                "type": "object",
-                "required": [
-                    "email",
-                    "password"
-                ],
-                "properties": {
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
+        },
+            "securityDefinitions": {
+                "api_key": {
+                    "type": "apiKey",
+                    "name": "api_key",
+                    "in": "header"
+                }
+            },
+            "definitions": {
+                "Member": {
+                    "type": "object",
+                    "required": [
+                        "name"
+                    ],
+                    "properties": {
+                        "image": {
+                            "type": "string",
+                        },
+                        "name": {
+                            "type": "string"
+                        }
                     }
                 },
-                "example": {
-                    "email": "juanperez@gmail.com",
-                    "password": "Ju#nPerez2"
-                }
-            },
-            "User": {
-                "type": "object",
-                "required": [
-                    "firstName",
-                    "lastName",
-                    "email",
-                    "password",
-                    "roleId",
-                    "image"
-                ],
-                "properties": {
-                    "firstName": {
-                        "type": "string",
+                "Auth": {
+                    "type": "object",
+                    "required": [
+                        "email",
+                        "password"
+                    ],
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        }
                     },
-                    "lastName": {
-                        "type": "string",
-                    },
-                    "email": {
-                        "type": "string",
-                    },
-                    "password": {
-                        "type": "string",
-                    },
-                    "roleId": {
-                        "type": "integer",
-                    },
-                    "image": {
-                        "type": "string",
-                    },
+                    "example": {
+                        "email": "juanperez@gmail.com",
+                        "password": "Ju#nPerez2"
+                    }
                 },
-                "example": {
-                    "firstName": "Juan",
-                    "lastName": "Perez",
-                    "email": "juanperez@gmail.com",
-                    "password": "Ju#nPerez2",
-                    "roleId": 1,
-                    "image": "juanavatar.jpg"
+                "User": {
+                    "type": "object",
+                    "required": [
+                        "firstName",
+                        "lastName",
+                        "email",
+                        "password",
+                        "roleId",
+                        "photo"
+                    ],
+                    "properties": {
+                        "firstName": {
+                            "type": "string",
+                        },
+                        "lastName": {
+                            "type": "string",
+                        },
+                        "email": {
+                            "type": "string",
+                        },
+                        "password": {
+                            "type": "string",
+                        },
+                        "roleId": {
+                            "type": "integer",
+                        },
+                        "photo": {
+                            "type": "string",
+                        },
+                    },
+                    "example": {
+                        "firstName": "Juan",
+                        "lastName": "Perez",
+                        "email": "juanperez@gmail.com",
+                        "password": "Ju#nPerez2",
+                        "roleId": 1,
+                        "image": "juanavatar.jpg"
+                    }
+                },
+                "Categories": {
+                    "type": "object",
+                    "required": [
+                        "name",
+                        "description",
+                        "image"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                        },
+                        "description": {
+                            "type": "string",
+                        },
+                        "image": {
+                            "type": "string",
+                        }
+                    },
+                    "example": {
+                        "name": "Category 1",
+                        "description": "The category 1 is for testing ",
+                        "image": "cat-1.jpg",
+                    }
                 }
             }
-        },
+        
     },
-    basePath: "/",
-    apis: [`${path.join(__dirname, "/documentations/*.js")}`],
-    "externalDocs": {
-        "description": "Find out more about Swagger",
-        "url": "http://swagger.io"
+        basePath: "/",
+        apis: [`${path.join(__dirname, "/documentations/*.js")}`],
+        "externalDocs": {
+            "description": "Find out more about Swagger",
+            "url": "http://swagger.io"
+        }
     }
-
-}
-
 const swaggerSpect = swaggerJSDoc(this.options);
 
 function swaggerDocs(app, port) {

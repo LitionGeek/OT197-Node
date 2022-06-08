@@ -1,5 +1,8 @@
 const { Activities } = require("../../models/index.js")
-const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator')
+const { Op } = require('sequelize')
+const paginate = require('../../utils/paginate.js')
+
 
 const activitiesController = {
     create: async (req, res) => {
@@ -11,7 +14,6 @@ const activitiesController = {
         }
         else {
             try {
-                console.log(req.body)
                 Activities.create(req.body)
                     .then((activity) => {
                         res.status(200).send(activity)
