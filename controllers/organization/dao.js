@@ -7,7 +7,7 @@ module.exports ={
     },
     async getAllDAOWithSlidesDAO(){
         return db.Organization.findAll({
-            attributes:['name','image','phone',"address"],
+            attributes:['name','image','phone','address','urlFacebook','urlInstagram','urlLinkedin'],
             include:[{
                 model:db.Slides,
                 order:[[db.Slides,'order',"desc"]],
