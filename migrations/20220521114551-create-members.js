@@ -14,6 +14,22 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
+      facebookUrl:{
+        type:Sequelize.STRING,
+        allowNull:true
+      },
+      instagramUrl:{
+        type:Sequelize.STRING,
+        allowNull:true
+      },
+      linkedinUrl:{
+        type:Sequelize.STRING,
+        allowNull:true
+      },
+      description:{
+        type:Sequelize.STRING,
+        allowNull:true
+      }, 
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
