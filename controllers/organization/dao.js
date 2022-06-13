@@ -17,5 +17,8 @@ module.exports ={
     },
     async createOrganizationDAO(organization){
         return db.Organization.create(organization);
+    },
+    async editOrganizationDAO(organization,idOrganization){
+        return await db.Organization.update(organization,{where:{id:idOrganization}});
     }
 }
