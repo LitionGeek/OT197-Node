@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post('/public',[validateBody],createOrganization);
 router.get('/public',/* validateToken, */getAllOrganizations);
-router.put('/public/:id',validateBody,editOrganization);
+router.put('/public/:id', [validateToken, adminMiddleware ,validateBody],editOrganization);
 
 module.exports = router;
