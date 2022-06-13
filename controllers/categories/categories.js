@@ -1,9 +1,10 @@
-const Categories = require("../../models/Categories.js");
 const db = require("../../models");
+const { Categories } = require("../../models/index.js")
+const paginate = require('../../utils/paginate.js')
 
 
 //Create
-const create = async(req, res) => {
+const create = async (req, res) => {
     try {
         //check if unique
         const data = req.body
@@ -24,7 +25,7 @@ const create = async(req, res) => {
 };
 
 //Remove
-const remove = async(req, res) => {
+const remove = async (req, res) => {
     let category = await db.Categories.destroy({
         where: { id: req.params.id }
     });
@@ -37,7 +38,7 @@ const remove = async(req, res) => {
 
 
 //Update
-const update = async(req, res) => {
+const update = async (req, res) => {
     //check if unique
     const data = req.body
     const error = await uniqueName(data.name)
@@ -55,18 +56,39 @@ const update = async(req, res) => {
 };
 
 //Get All
-const getAll = async(req, res) => {
-    let category = await db.Categories.findAll({ attributes: ['name'] });
 
-    if (Object.keys(category).length === 0) {
-        res.status(400).json({ error: 'Category database is empty.' });
-    } else {
-        res.status(200).json(category);
+const getAll = async (req, res) => {
+    // let category = await db.Categories.findAll({ attributes: ['name'] });
+    try {
+       
+        const { q, page } = req.query
+        let search = {}
+
+        if (q) {
+            search = {
+                where: {
+                    name: {
+                        [Op.like]: `%${q}%`
+                    }
+                }
+            }
+        }
+        let category = await paginate(Categories, page)
+        if (Object.keys(category).length === 0) {
+            res.status(400).json({ error: 'Category database is empty.' });
+        } else {
+            res.status(200).json(category);
+        }
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "Failed to fetch activities"
+        })
     }
 };
 
 //Get by id
-const getById = async(req, res) => {
+const getById = async (req, res) => {
     try {
         let category = await db.Categories.findByPk(req.params.id);
         if (category === null) {
@@ -80,7 +102,7 @@ const getById = async(req, res) => {
     }
 };
 
-const uniqueName = async(name) => {
+const uniqueName = async (name) => {
     const result = await db.Categories.findOne({ where: { name: name } });
     if (result) {
         const error = new Error(`Name: ${name}, is not unique`)
