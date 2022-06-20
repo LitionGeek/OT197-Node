@@ -5,9 +5,9 @@ const {validateToken,generateToken}= require('../middlewares/auth');
 const { validateMember } = require('../middlewares/validationsMembers.js');
 
 
-router.get("/:page",getAllMembers);
+router.get("/:page",getAllMembers,validateToken);
 router.post("/",validateMember,validateToken,createMember);
 router.delete("/:id",validateToken,deleteMember);
-router.put("/:id",validateMember,editMember);
+router.put("/:id",validateMember,validateToken,editMember);
 
 module.exports = router;
