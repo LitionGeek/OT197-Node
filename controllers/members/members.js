@@ -26,14 +26,18 @@ module.exports = {
     },
     async deleteMember(req, res) {
         try {
-            const member = await getMemberDAO(req.params.id);
-            const deleted = await deleteMemberDAO(member.id);
-            return res.status(200).json({
-                message: "Member Deleted"
-            });
-        } catch (error) {
+            const deleted = await deleteMemberDAO(req.params.id);
+            if(deleted!=0){
+                return res.status(200).json({
+                    message: "Member Deleted"
+                });
+            }
             return res.status(404).json({
                 message: "Member not exist"
+            });
+        } catch (error) {
+            return res.status(500).json({
+                message: "Internal server error"
             });
         }
     },
@@ -84,7 +88,7 @@ module.exports = {
             description:req.body.description
         }
         try {         
-            const updateMember = updateMemberDAO(req.params.id,receivedMember);
+            const updateMember = await updateMemberDAO(req.params.id,receivedMember);
             if (updateMember != 0) {
                 return res.status(200).json({
                     message: "Member update"
