@@ -6,7 +6,11 @@ module.exports = {
     async createMember(req, res) {
         const receivedMember = {
             name: req.body.name,
-            image: req.body.image
+            image: req.body.image,
+            facebookUrl:req.body.facebookUrl,
+            imageUrl:req.body.imageUrl,
+            linkedinUrl:req.body.linkedinUrl,
+            description:req.body.description
         }
         try {
             const memberCreated = await createMemberDAO(receivedMember);
@@ -71,11 +75,16 @@ module.exports = {
         }
     },
     async editMember(req, res) {
-        const { name, image } = req.body;
-        const Member = { name, image };
-        try {
-            await getMemberDAO(req.params.id);
-            const updateMember = await updateMemberDAO(req.params.id, Member)
+        const receivedMember = {
+            name: req.body.name,
+            image: req.body.image,
+            facebookUrl:req.body.facebookUrl,
+            imageUrl:req.body.imageUrl,
+            linkedinUrl:req.body.linkedinUrl,
+            description:req.body.description
+        }
+        try {         
+            const updateMember = updateMemberDAO(req.params.id,receivedMember);
             if (updateMember != 0) {
                 return res.status(200).json({
                     message: "Member update"
